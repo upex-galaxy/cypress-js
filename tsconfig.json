@@ -10,6 +10,7 @@
 		"target": "ESNext",
 		"verbatimModuleSyntax": true,
 		"lib": ["es5", "dom"],
+		"noImplicitAny": true,
 		"types": [
 			"cypress-file-upload",
 			"cypress-plugin-api",
