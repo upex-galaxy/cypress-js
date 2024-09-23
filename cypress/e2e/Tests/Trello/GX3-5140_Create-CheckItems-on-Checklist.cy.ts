@@ -1,4 +1,4 @@
-import { stringify } from 'querystring';
+//import { stringify } from 'querystring';
 
 let key:string = Cypress.env('trelloApiKey');
 let token:string = Cypress.env('trelloApiToken');
@@ -33,7 +33,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idBoard = stringify(response.body.id);
+			idBoard = response.body.id;
 		});
 	});
 
@@ -48,7 +48,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idList = stringify(response.body[0].id);
+			idList = response.body[0].id;
 		});
 	});
 
@@ -65,7 +65,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idCard = stringify(response.body.id);
+			idCard = response.body.id;
 		});
 	});
 
@@ -81,7 +81,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idChecklist = stringify(response.body.id);
+			idChecklist = response.body.id;
 		});
 	});
 });
@@ -98,7 +98,7 @@ describe('Suite', () => {
 			},
 		}).then(response => {
 			expect(response.status).to.eq(200);
-			idCheckItem = stringify(response.body.id);
+			idCheckItem = response.body.id;
 		});
 	});
 	it('2: Get created Checkitem', () => {
