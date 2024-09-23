@@ -26,6 +26,7 @@ jobs:
     - name: 🧬Install All Dependencies
       run: |
         bun install
+        yarn install --check-files # Verifica y actualiza las dependencias si es necesario
 
     - name: 🧪Cypress Run Test Coverage
       uses: cypress-io/github-action@v4
