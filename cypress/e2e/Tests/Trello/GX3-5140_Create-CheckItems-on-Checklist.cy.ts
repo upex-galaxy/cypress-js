@@ -36,4 +36,53 @@ describe('Precondition', () => {
 			idBoard = response.body.id;
 		});
 	});
+
+	it('2: Get lists of the created board, to assign id of the list', () => {
+		cy.api({
+			method: 'GET',
+			url: `${baseURL}/${pathBoard}/${idBoard}/${pathLists}`,
+			qs: {
+				key: key,
+				token: token,
+			},
+		}).then(response => {
+			expect(response).to.be.an('object');
+			expect(response.status).to.eql(200);
+			idList = response.body[0].id;
+		});
+	});
+
+	it('3: Create card on List 1', () => {
+		cy.api({
+			method: 'POST',
+			url: `${baseURL}/${pathCards}`,
+			qs: {
+				key: key,
+				token: token,
+				idList: idList,
+				name: titleCard
+			},
+		}).then(response => {
+			expect(response).to.be.an('object');
+			expect(response.status).to.eql(200);
+			idCard = response.body.id;
+		});
+	});
+
+	it('4: Create check list on card 1', () => {
+		cy.api({
+			method: 'POST',
+			url: `${baseURL}/${pathCards}/${idCard}/${pathChecklists}`,
+			qs: {
+				key: key,
+				token: token,
+				name: titleCkeckList
+			},
+		}).then(response => {
+			expect(response).to.be.an('object');
+			expect(response.status).to.eql(200);
+			idChecklist = response.body.id;
+		});
+	});
+
 });
