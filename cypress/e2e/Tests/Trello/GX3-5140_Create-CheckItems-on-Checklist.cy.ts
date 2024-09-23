@@ -1,4 +1,4 @@
-//!! MI TEST:
+import { stringify } from 'querystring';
 
 let key:string = Cypress.env('trelloApiKey');
 let token:string = Cypress.env('trelloApiToken');
@@ -33,7 +33,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idBoard = response.body.id;
+			idBoard = stringify(response.body.id);
 		});
 	});
 
@@ -48,7 +48,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idList = response.body[0].id;
+			idList = stringify(response.body[0].id);
 		});
 	});
 
@@ -65,7 +65,7 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idCard = response.body.id;
+			idCard = stringify(response.body.id);
 		});
 	});
 
@@ -81,8 +81,107 @@ describe('Precondition', () => {
 		}).then(response => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
-			idChecklist = response.body.id;
+			idChecklist = stringify(response.body.id);
 		});
 	});
+});
 
+describe('Suite', () => {
+	it('1: Create a new checkitem', () => {
+		cy.api({
+			method: 'POST',
+			url: `${baseURL}/${pathChecklists}/${idChecklist}/${pathCheckItems}`,
+			qs: {
+				key: key,
+				token: token,
+				name: titleCheckItem
+			},
+		}).then(response => {
+			expect(response.status).to.eq(200);
+			idCheckItem = stringify(response.body.id);
+		});
+	});
+	it('2: Get created Checkitem', () => {
+		cy.api({
+			method: 'GET',
+			url: `${baseURL}/${pathChecklists}/${idChecklist}/${pathCheckItems}/${idCheckItem}`,
+			qs: {
+				key: key,
+				token: token
+			},
+		}).then(response => {
+			expect(response.status).to.eq(200);
+			expect(response.body.name).to.eq(`${titleCheckItem}`);
+		});
+	});
+	it('3: Modify checkitem\'s name and status', () => {
+		cy.api({
+			method: 'PUT',
+			url: `${baseURL}/${pathCards}/${idCard}/${pathCheckItem}/${idCheckItem}`,
+			qs: {
+				key: key,
+				token: token,
+				state: 'complete',
+				name: titleCheckItemModified
+			},
+		}).then(response => {
+			expect(response.status).to.eq(200);
+		});
+	});
+	it('4: Verify checkitem was modified', () => {
+		cy.api({
+			method: 'GET',
+			url: `${baseURL}/${pathChecklists}/${idChecklist}/${pathCheckItems}/${idCheckItem}`,
+			qs: {
+				key: key,
+				token: token
+			},
+		}).then(response => {
+			expect(response.status).to.eq(200);
+			expect(response).to.be.an('object');
+			expect(response.body.name).to.eq(`${titleCheckItemModified}`);
+			expect(response.body.state).to.eq('complete');
+		});
+	});
+	it('5: Delete Checkitem', () => {
+		cy.api({
+			method: 'DELETE',
+			url: `${baseURL}/${pathCards}/${idCard}/${pathCheckItem}/${idCheckItem}`,
+			qs: {
+				key: key,
+				token: token
+			},
+		}).then(response => {
+			expect(response.status).to.eq(200);
+		});
+	});
+	it('6: Not get a deleted checkitem', () => {
+		cy.api({
+			method: 'GET',
+			url: `${baseURL}/${pathChecklists}/${idChecklist}/${pathCheckItems}/${idCheckItem}`,
+			qs: {
+				key: key,
+				token: token
+			},
+			failOnStatusCode: false,
+		}).then(response => {
+			expect(response.status).to.eq(404);
+			expect(response.body).to.eq('model not found');
+		});
+	});
+});
+
+describe('Postcondition', () => {
+	it('1: Delete the board created', () => {
+		cy.api({
+			method: 'DELETE',
+			url: `${baseURL}/${pathBoard}/${idBoard}`,
+			qs: {
+				key: key,
+				token: token
+			},
+		}).then(response => {
+			expect(response.status).to.eql(200);
+		});
+	});
 });
