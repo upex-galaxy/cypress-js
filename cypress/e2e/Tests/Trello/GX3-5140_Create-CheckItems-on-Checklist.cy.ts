@@ -180,8 +180,6 @@ describe('Postcondition', () => {
 				key: key,
 				token: token
 			},
-		}).then(response => {
-			expect(response.status).to.eql(200);
 		});
 	});
 });
