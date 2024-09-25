@@ -1,7 +1,7 @@
 //import { stringify } from 'querystring';
 
-let key:string = Cypress.env('trelloApiKey');
-let token:string = Cypress.env('trelloApiToken');
+let key:string = Cypress.env('process.env.trelloApiKeyCFG');
+let token:string = Cypress.env('process.env.trelloApiTokenCFG');
 let titleBoard:string ='Board-1';
 let titleCard:string = 'Card 1';
 let titleCkeckList:string = 'Checklist 1';
