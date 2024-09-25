@@ -7,7 +7,7 @@
 	"scripts": {
 		"test": "cypress open",
 		"test:run": "cypress run --browser electron --spec",
-		"test:chrome": "cypress run --browser chrome --reporter cypress-multi-reporters --reporter-options configFile=cypress.reporter.chrome.json --spec",
+		"test:chrome": "cypress run --browser chrome --reporter cypress-multi-reporters --reporter-options configFile=cypress.reporter.chrome.json",
 		"test:firefox": "cypress run --browser firefox --reporter cypress-multi-reporters --reporter-options configFile=cypress.reporter.firefox.json --spec",
 		"test:edge": "cypress run --browser edge --reporter cypress-multi-reporters --reporter-options configFile=cypress.reporter.edge.json --spec",
 		"regression": "cypress run --browser electron",
