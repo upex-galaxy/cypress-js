@@ -34,6 +34,7 @@ describe('Precondition', () => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
 			idBoard = response.body.id;
+			cy.wrap(idBoard).as('idBoard');
 		});
 	});
 
@@ -49,6 +50,7 @@ describe('Precondition', () => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
 			idList = response.body[0].id;
+			cy.wrap(idList).as('idList');
 		});
 	});
 
@@ -66,6 +68,7 @@ describe('Precondition', () => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
 			idCard = response.body.id;
+			cy.wrap(idCard).as('idCard');
 		});
 	});
 
@@ -82,6 +85,7 @@ describe('Precondition', () => {
 			expect(response).to.be.an('object');
 			expect(response.status).to.eql(200);
 			idChecklist = response.body.id;
+			cy.wrap(idChecklist).as('idChecklist');
 		});
 	});
 });
@@ -99,6 +103,7 @@ describe('Suite', () => {
 		}).then(response => {
 			expect(response.status).to.eq(200);
 			idCheckItem = response.body.id;
+			cy.wrap(idCheckItem).as('idCheckItem');
 		});
 	});
 	it('2: Get created Checkitem', () => {
