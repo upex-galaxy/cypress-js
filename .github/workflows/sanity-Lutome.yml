@@ -32,7 +32,7 @@ jobs:
       uses: cypress-io/github-action@v4
       with:
         browser: chrome
-        command: | 
+        command: |
           bun run test:chrome cypress/e2e/Tests/Trello/GX3-5140_Create-CheckItems-on-Checklist.cy.ts
 
     - name: 📬Generate JUnit/Mocha Report
@@ -48,7 +48,7 @@ jobs:
         password: ${{secrets.XRAY_CLIENT_SECRET}}
         testFormat: 'junit' #! NO CAMBIAR
         testPaths: 'cypress/tests_results/junit/chrome_regression_report.xml' #! NO CAMBIAR
-        testExecKey: 'GX3-5144' 
+        testExecKey: 'GX3-5144'
         projectKey: 'GX3-5140'
       env:
         XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
