@@ -90,7 +90,7 @@
     "terminal.integrated.tabs.defaultIcon": "source-control",
     "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.colorTheme": "SynthWave '84",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.settings.editor": "json",
     "workbench.tree.enableStickyScroll": true,

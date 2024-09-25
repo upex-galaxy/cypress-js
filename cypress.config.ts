@@ -20,7 +20,7 @@ export default defineConfig({
 	// Whether Cypress will watch and restart tests on test file changes:
 	watchForFileChanges: false,
 	// En Caso de hacer testing en SUT con seguridad web:
-	chromeWebSecurity: false,
+	chromeWebSecurity: true,
 	// multi-reporters: one report.xml + mochawesome.json per file.
 	reporter: 'cypress-multi-reporters',
 	reporterOptions: {
@@ -28,11 +28,11 @@ export default defineConfig({
 	},
 	// E2E Testing runner
 	e2e: {
-		baseUrl: 'https://demoqa.com',
+		baseUrl: 'https://api.trello.com/1',
 		// Glob pattern to determine what test files to load:
-		specPattern: [ 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}' ],
-		excludeSpecPattern: [ 'cypress/e2e/**/*.example.cy.js' ],
-		experimentalRunAllSpecs: true,
+		specPattern: [ 'cypress/e2e/Tests/Trello/*.cy.{js,jsx,ts,tsx}' ],
+		excludeSpecPattern: [ 'cypress/e2e/How-to/*.{cy.js}', 'cypress/e2e/Tests/Checkout/*.{cy.js}' ],
+		//experimentalRunAllSpecs: true,
 		// Use Cypress plugins:
 		setupNodeEvents(on, config) {
 			// This is required for the preprocessor to be able to generate JSON reports after each run, and more,
@@ -42,6 +42,7 @@ export default defineConfig({
 		},
 	},
 	env: {
-
+		trelloKey: process.env.ApiKey,
+      	trelloToken: process.env.ApiToken,
 	},
 });
