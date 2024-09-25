@@ -1,24 +1,24 @@
 //import { stringify } from 'querystring';
 
-let key:string = Cypress.env('process.env.trelloApiKeyCFG');
-let token:string = Cypress.env('process.env.trelloApiTokenCFG');
-let titleBoard:string ='Board-1';
-let titleCard:string = 'Card 1';
-let titleCkeckList:string = 'Checklist 1';
-let titleCheckItem:string = 'CheckItem 1';
-let titleCheckItemModified:string = 'Name changed';
+const key:string = Cypress.env('process.env.trelloKey');
+const token:string = Cypress.env('process.env.trelloToken');
+const titleBoard:string ='Board-1';
+const titleCard:string = 'Card 1';
+const titleCkeckList:string = 'Checklist 1';
+const titleCheckItem:string = 'CheckItem 1';
+const titleCheckItemModified:string = 'Name changed';
+const pathBoard:string = 'boards';
+const pathLists:string = 'lists';
+const pathCards:string = 'cards';
+const pathChecklists:string = 'checklists';
+const pathCheckItem:string = 'checkitem';
+const pathCheckItems:string = 'checkitems';
+const baseURL:string = 'https://api.trello.com/1';
 let idBoard:string;
 let idList:string;
 let idCard:string;
 let idChecklist:string;
 let idCheckItem:string;
-let pathBoard:string = 'boards';
-let pathLists:string = 'lists';
-let pathCards:string = 'cards';
-let pathChecklists:string = 'checklists';
-let pathCheckItem:string = 'checkitem';
-let pathCheckItems:string = 'checkitems';
-let baseURL:string = 'https://api.trello.com/1';
 
 describe('Precondition', () => {
 	it('1: Create a board', () => {

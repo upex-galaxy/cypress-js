@@ -42,7 +42,7 @@ export default defineConfig({
 		},
 	},
 	env: {
-		trelloApiKey: process.env.trelloApiKeyCFG,
-      	trelloApiToken: process.env.trelloApiTokenCFG,
+		trelloKey: process.env.ApiKey,
+      	trelloToken: process.env.ApiToken,
 	},
 });

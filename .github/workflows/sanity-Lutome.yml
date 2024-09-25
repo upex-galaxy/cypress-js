@@ -30,10 +30,14 @@ jobs:
 
     - name: 🧪Cypress Run Test Coverage
       uses: cypress-io/github-action@v4
+      env:
+        TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
+        TRELLO_API_TOKEN: ${{ secrets.TRELLO_API_TOKEN }}
       with:
         browser: chrome
         command: |
           bun run test:chrome cypress/e2e/Tests/Trello/GX3-5140_Create-CheckItems-on-Checklist.cy.ts
+
 
     - name: 📬Generate JUnit/Mocha Report
       if: always()
