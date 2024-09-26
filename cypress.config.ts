@@ -28,7 +28,7 @@ export default defineConfig({
 	},
 	// E2E Testing runner
 	e2e: {
-		baseUrl: 'https://demoqa.com',
+		baseUrl: 'https://api.trello.com/1',
 		// Glob pattern to determine what test files to load:
 		specPattern: [ 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}' ],
 		excludeSpecPattern: [ 'cypress/e2e/**/*.example.cy.js' ],
@@ -42,6 +42,7 @@ export default defineConfig({
 		},
 	},
 	env: {
-
+		apiKey : process.env.KEY,
+		apiToken : process.env.TOKEN
 	},
 });
