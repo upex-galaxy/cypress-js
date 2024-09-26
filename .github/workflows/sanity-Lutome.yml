@@ -1,0 +1,72 @@
+name: 🧪Pipeline SanityTest
+run-name: ${{github.actor}}👨🏻‍🔬 triggered SanityTest in ${{github.ref_name}}
+
+on:
+  push:
+    branches: ['5149']
+  workflow_dispatch:
+
+
+jobs:
+  SanityTest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 💻Checkout
+      uses: actions/checkout@v4
+
+    - name: 💿Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: 🍙 Bun Setup
+      uses: oven-sh/setup-bun@v1
+
+    - name: 🧬Install All Dependencies
+      run: |
+        bun install
+
+    - name: 🧪Cypress Run Test Coverage
+      uses: cypress-io/github-action@v4
+      with:
+        browser: chrome
+        command: |
+          bun run test:chrome cypress/e2e/Tests/Trello/GX3-5149_move_and_delete_all_cards_in_a_list.cy.ts
+
+    - name: 📬Generate JUnit/Mocha Report
+      if: always()
+      run: |
+        bun run chrome:report
+
+    - name: ✅Import Test Results to Xray
+      if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != '' #? Corre este paso si las variables de entorno están definidas
+      uses: mikepenz/xray-action@v3
+      with: #OPCIONES PARA IMPORTAR LOS RESULTADOS DE PRUEBA A JIRA XRAY:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit' #! NO CAMBIAR
+        testPaths: 'cypress/tests_results/junit/chrome_regression_report.xml' #! NO CAMBIAR
+        testExecKey: 'GX3-5149'
+        projectKey: 'GX3'
+      env:
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+
+    - name: 📊Upload Artifact Mochawesome Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sanity-mocha-report
+        path: cypress/tests_reports/chrome_mocha_report
+        retention-days: 15
+
+    - name: 🔔Slack Notification of Done
+      if: env.SLACK_WEBHOOK != '' #? Corre este paso si la variable de entorno está definida
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Ari✨
+        SLACK_MESSAGE: ':test_tube: CYPRESS: SanityTest is Done and imported to Jira :rocket:'
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
